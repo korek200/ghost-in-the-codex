@@ -100,14 +100,16 @@ with col2:
         else:
             with st.spinner("El Tlacuilo Digital está procesando..."):
                 try:
-                    # Forzamos la versión estable de la API para evitar el error 404
-genai.configure(api_key=os.environ["GOOGLE_API_KEY"], transport='rest')
-model = genai.GenerativeModel('gemini-1.5-flash')
-                    response = model.generate_content(query)
-                    st.markdown("#### RESULTADO:")
-                    st.markdown(f"> {response.text}")
-                except Exception as e:
-                    st.error(f"Fallo en la interpretación: {e}")
-
-st.markdown("---")
-st.caption("🔒 SOVEREIGN INFRASTRUCTURE | CDMX | 2025")
+            # Configuración forzada para evitar errores 404 y problemas de indentación
+            genai.configure(api_key=os.environ["GOOGLE_API_KEY"], transport='rest')
+            model = genai.GenerativeModel('gemini-1.5-flash')
+            
+            response = model.generate_content(query)
+            
+            if response.text:
+                st.markdown(f'<div class="cl-response-box">{response.text}</div>', unsafe_allow_html=True)
+            else:
+                st.error("El Oráculo no devolvió una respuesta clara.")
+                
+        except Exception as e:
+            st.error(f"Error en la interpretación: {str(e)}")
