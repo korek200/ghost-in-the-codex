@@ -100,7 +100,7 @@ with col2:
         else:
             with st.spinner("El Tlacuilo Digital está procesando..."):
                 try:
-                    model = genai.GenerativeModel('gemini-1.5-flash')
+                    model = genai.GenerativeModel('gemini-1.5-flash-latest')
                     response = model.generate_content(query)
                     st.markdown("#### RESULTADO:")
                     st.markdown(f"> {response.text}")
